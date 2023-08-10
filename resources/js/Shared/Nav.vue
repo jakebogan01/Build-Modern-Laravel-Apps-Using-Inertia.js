@@ -1,18 +1,19 @@
 <script setup>
-    import {Link} from "@inertiajs/vue3";
+    import { Link } from "@inertiajs/vue3";
+    import NavLink from "@/Shared/NavLink.vue";
 </script>
 
 <template>
     <nav class="py-6">
         <ul class="list-disc">
             <li>
-                <Link href="/" class="text-blue-500 hover:underline">Home</Link>
+                <NavLink href="/" :active="'Home'">Home</NavLink>
             </li>
             <li>
-                <Link href="/users" class="text-blue-500 hover:underline">Users</Link>
+                <NavLink href="/users" :active="'Users'">Users</NavLink>
             </li>
             <li>
-                <Link href="/settings" class="text-blue-500 hover:underline">Settings</Link>
+                <NavLink href="/settings" :active="'Settings'">Settings</NavLink>
             </li>
             <li>
                 <Link href="/test" method="post" :data="{ foo: 'foo' }" class="text-blue-500 hover:underline">Test</Link>
