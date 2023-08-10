@@ -33,6 +33,10 @@ Route::get('/settings', function () {
     return Inertia::render('Settings');
 });
 
+Route::post('/test', function () {
+    dd(request('foo'));
+});
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
