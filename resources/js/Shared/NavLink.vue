@@ -13,7 +13,3 @@
         <slot />
     </Link>
 </template>
-
-<style scoped>
-
-</style>
