@@ -1,7 +1,10 @@
 <script setup>
-    import { Head, Link } from '@inertiajs/vue3';
+    import { Head } from '@inertiajs/vue3';
     import Layout from "@/Shared/Layout.vue";
 
+    defineOptions({
+        layout: Layout
+    });
     defineProps({
         frameworks: Array,
     });
@@ -10,15 +13,13 @@
 <template>
     <Head title="Home" />
 
-    <Layout>
-        <h1 class="text-3xl">Home</h1>
+    <h1 class="text-3xl">Home</h1>
 
-        <p>The following are all the technologies used in this series</p>
+    <p>The following are all the technologies used in this series</p>
 
-        <ul class="mt-5">
-            <li v-for="framework in frameworks" v-text="framework"></li>
-        </ul>
-    </Layout>
+    <ul class="mt-5">
+        <li v-for="framework in frameworks" v-text="framework"></li>
+    </ul>
 </template>
 
 <style scoped>
