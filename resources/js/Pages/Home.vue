@@ -11,7 +11,16 @@
 </script>
 
 <template>
-    <Head title="Home" />
+    <!--add dynamic meta tags-->
+    <Head>
+        <title>Home</title>
+        <meta name="description" content="Home page" head-key="description">
+    </Head>
+
+    <!--alternative way to add meta tags-->
+    <teleport to="head">
+        <meta name="robots" content="noindex">
+    </teleport>
 
     <h1 class="text-3xl">Home</h1>
 

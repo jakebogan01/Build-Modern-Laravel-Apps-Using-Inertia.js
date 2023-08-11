@@ -1,5 +1,5 @@
 <script setup>
-    import { Head, Link } from '@inertiajs/vue3';
+    import { Link } from '@inertiajs/vue3';
     import Layout from "@/Shared/Layout.vue";
 
     defineOptions({
@@ -11,8 +11,6 @@
 </script>
 
 <template>
-    <Head title="Users" />
-
     <h1 class="text-3xl">Users</h1>
 
     <div class="mt-[1500px]">
