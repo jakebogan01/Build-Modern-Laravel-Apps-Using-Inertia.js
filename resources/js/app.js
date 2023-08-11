@@ -5,13 +5,14 @@ import { createApp, h } from 'vue';
 import {createInertiaApp, Link} from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
-// import Layout from "@/Shared/Layout.vue";
+import Layout from "@/Shared/Layout.vue";
 
+let enableCodeSplitting = false;
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
-    resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
+    // resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
     // if you want to use a custom layout, uncomment this line and remove the layout import from all pages
     // resolve: name => {
     //     const pages = import.meta.glob('./Pages/**/*.vue', { eager: true })
@@ -19,6 +20,32 @@ createInertiaApp({
     //     page.default.layout = page.default.layout || Layout
     //     return page
     // },
+    resolve: (name) => enableCodeSplitting ?
+        resolvePageComponent(
+            `./Pages/${name}.vue`,
+            import.meta.glob('./Pages/**/*.vue', { eager: false })
+        )
+            .then((module) => {
+                let page = module;
+                if (!page.default.layout) {
+                    // Set the default layout for all page components that don't have a layout set
+                    // Without this check, we will overwrite the page's layout, which we don't want to do
+                    page.default.layout = Layout
+                }
+                return page;
+            })
+        :
+        (function() {
+            const pages = import.meta.glob('./Pages/**/*.vue', { eager: true })
+            let page = pages[`./Pages/${name}.vue`]
+
+            if (!page.default.layout) {
+                // Set the default layout for all page components that don't have a layout set
+                // Without this check, we will overwrite the page's layout, which we don't want to do
+                page.default.layout = Layout
+            }
+            return page
+        })(),
     setup({ el, App, props, plugin }) {
         return createApp({ render: () => h(App, props) })
             .use(plugin)
